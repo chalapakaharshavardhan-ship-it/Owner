@@ -198,9 +198,19 @@
     const totalSlides = slides.length;
     let index = 0;
 
-    function showSlide(i) {
-      index = (i + totalSlides) % totalSlides;
-      carouselInner.style.transform = `translateX(-${index * 100}%)`;
+    function showSlide(i) 
+    {
+
+      if (i < 0) {
+      index = 0; // stop at first slide
+     } else if (i >= totalSlides) {
+
+      index = totalSlides - 1; // stop at last slide
+      } else {
+
+        index = i;
+      }
+        carouselInner.style.transform = `translateX(-${index * 100}%)`;
     }
 
     prevBtn.addEventListener("click", () => showSlide(index - 1));
