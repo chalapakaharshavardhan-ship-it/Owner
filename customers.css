@@ -120,3 +120,72 @@ body {
         background: #6c63ff;
         color: white;
       }
+      /* ---------------------------
+   📱 Mobile Responsive Fixes
+---------------------------- */
+
+/* Make search bar flexible */
+.search-container {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.search-container input {
+  flex: 1;
+  min-width: 200px;
+  width: auto; /* override 60% */
+}
+
+.search-container button {
+  flex-shrink: 0;
+}
+
+/* Allow table to scroll on mobile */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table-container table {
+  min-width: 700px; /* keep columns readable */
+}
+
+/* Tablet adjustments */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 20px;
+  }
+
+  th, td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .view-orders {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 18px;
+  }
+
+  /* Stack search bar vertically */
+  .search-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-container input,
+  .search-container button {
+    width: 100%;
+  }
+}
