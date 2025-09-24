@@ -100,7 +100,7 @@
   padding: 40px 20px;
   text-align: center;
   border-radius: 12px;
-  margin-bottom: 25px;
+  margin-bottom: 40px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -577,4 +577,12 @@
     white-space: nowrap;
   }
 }
+/* Extra gap between TaskPro navbar and Manage Subcategories */
+.subcategory-banner {
+  margin-top: 30px; /* adjust number as needed */
+}
+body {
+  padding-top: 90px; /* creates global space below the fixed navbar */
+}
+
 

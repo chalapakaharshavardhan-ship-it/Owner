@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>TaskPro - Register</title>
-    <style>
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f9fafb;
@@ -142,54 +136,4 @@
         .register-form .login-link a:hover {
             text-decoration: underline;
         }
-    </style>
-</head>
-<body>
-
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            ✔ TaskPro
-        </div>
-        <div class="buttons">
-            <button class="login-btn" onclick="window.location.href='file:///C:/Users/visha/Downloads/ecom-project/LOGIN_PAGE.html'">Login</button>
-            <button class="register-btn">Register</button>
-        </div>
-    </header>
-
-    <!-- Register Form -->
-    <div class="form-container">
-        <div class="register-form">
-            <h2>Create Account</h2>
-            <p>Join TaskPro to get started</p>
-
-            <div class="upload-photo">
-                <img src="https://via.placeholder.com/80" alt="Profile Photo">
-                <button type="button">Upload Photo</button>
-            </div>
-            <div class="upload-text">
-                Click on image or button to upload profile picture (JPG/PNG, max 5MB)
-            </div>
-
-            <form onsubmit="event.preventDefault(); window.location.href='file:///C:/Users/visha/Downloads/ecom-project/LOGIN_PAGE.html';">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Choose a username" required>
-
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Enter your email" required>
-
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Create a password" required>
-
-                <button type="submit" class="submit-btn">Register</button>
-            </form>
-
-            <div class="login-link">
-                Already have an account? <a href="file:///C:/Users/visha/Downloads/ecom-project/LOGIN_PAGE.html">Login here</a>
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>
-
+    

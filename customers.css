@@ -1,83 +1,127 @@
-/* ---------------------------
-   📱 Responsive Fixes
----------------------------- */
-
-/* Tablet adjustments */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 20px;
-  }
-
-  th, td {
-    padding: 8px;
-    font-size: 14px;
-    word-break: keep-all;   /* keep content together */
-  }
-
-  .view-orders {
-    font-size: 12px;
-    padding: 4px 8px;
-    white-space: nowrap;    /* ✅ stays on one line */
-    display: inline-block;
-  }
-
-  .pagination button {
-    padding: 6px 10px;
-    font-size: 13px;
-  }
-
-  /* Stack search + make flexible */
-  .search-container {
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .search-container input {
-    flex: 1;
-    min-width: 200px;
-    width: auto;
-  }
-
-  .search-container button {
-    flex-shrink: 0;
-  }
-
-  /* Allow table scroll */
-  .table-container {
-    width: 100%;
-    overflow-x: auto;
-  }
-
-  .table-container table {
-    min-width: 700px;
-  }
+body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f7fa;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .hero {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .hero h1 {
+        color: #9f7aea;
+        margin: 0;
+        font-size: 24px;
+      }
+      .hero .subtitle {
+        color: #a0aec0;
+        margin: 5px 0;
+      }
+      .search-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .search-container input {
+        width: 60%;
+        padding: 10px;
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+        font-size: 14px;
+        border: none;
+      }
+      .search-container button {
+        padding: 10px 20px;
+        background-color: #9f7aea;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      .search-container button:hover {
+        background-color: #8a4af3;
+      }
+      .total-customers {
+        background-color: #4fd1c5;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+      }
+      th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #edf2f7;
+      }
+      th {
+        background-color: #f7fafc;
+        color: #4a5568;
+      }
+      td {
+        color: #2d3748;
+      }
+      .customer-info {
+        display: flex;
+        align-items: center;
+      }
+      .customer-info .username {
+        margin-left: 8px;
+      }
+      .view-orders {
+        background-color: #63b3ed;
+        color: white;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+      }
+      .view-orders:hover {
+        background-color: #4299e1;
+      }
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .pagination button {
+        padding: 8px 12px;
+        background-color: #9f7aea;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        margin: 0 5px;
+      }
+      .pagination button:hover {
+        background-color: #8a4af3;
+      }
+    .active {
+        background: #6c63ff;
+        color: white;
+      }
+      /* ✅ Fix "View Orders" wrapping on mobile */
+.view-orders {
+  white-space: nowrap;
 }
 
-/* Mobile phones */
-@media (max-width: 480px) {
-  .hero h1 {
-    font-size: 18px;
-  }
-
-  /* Stack search bar vertically */
-  .search-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-container input,
-  .search-container button {
-    width: 100%;
-  }
-
-  /* Table forces scroll on smaller screens */
-  .table-container table {
-    min-width: 600px;  /* ✅ keeps columns readable */
-  }
-
-  .view-orders {
-    font-size: 11px;
-    padding: 4px 6px;
-    white-space: nowrap;   /* ✅ never wraps */
-  }
-}
