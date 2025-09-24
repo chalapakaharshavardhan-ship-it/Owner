@@ -71,7 +71,7 @@
     </header> 
 
 <main class="container">
-      🚀 Carousel Section
+      
       <section class="carousel">
         <div class="carousel-inner" id="carouselInner"> 
           <div class="carousel-item">
@@ -112,6 +112,9 @@
           <div class="price-filter">
             <label for="maxPrice">Max Price (₹):</label>
             <input type="text" id="maxPrice" placeholder="No limit" />
+            <button type="button" class="btn price-asc">Price ↑</button>
+            <button type="button" class="btn price-desc">Price ↓</button>
+            
           </div>
 
           <div class="filter-buttons">
@@ -122,7 +125,19 @@
             <button class="btn clear-btn">
               <i class="fas fa-times"></i> Clear
             </button>
+
           </div>
+          <div class="sort-filter">
+            <label for="sortOptions"><i class="fas fa-sort"></i> Sort By:</label>
+  <select id="sortOptions">
+    <option value="">-- Select --</option>
+    <option value="atoz">A → Z</option>
+    <option value="ztoa">Z → A</option>
+    <option value="lowtohigh">Price: Low → High</option>
+    <option value="hightolow">Price: High → Low</option>
+  </select>
+</div>
+
         </div>
       </div>
     </div>
@@ -189,6 +204,40 @@
     </div>
   </div>
 </div>
+ <!-- New Item Button -->
+<!-- New Item Button -->
+<div style="text-align: center; margin: 40px 0;">
+  <button id="newItemBtn" class="btn new-item-btn">
+    ➕ New Item
+  </button>
+</div>
+
+<!-- Modal Popup -->
+<div id="newItemModal" style="display:none; position:fixed; top:0; left:0; 
+  width:100%; height:100%; background:rgba(0,0,0,0.6); 
+  justify-content:center; align-items:center; z-index:1000;">
+  
+  <div style="background:white; padding:20px; border-radius:10px; width:350px; position:relative;">
+    <h3>Add New Product</h3>
+    <label>Image URL:</label>
+    <input type="text" id="newImage" placeholder="Enter image link" style="width:100%; margin-bottom:10px;"><br>
+    
+    <label>Product Title:</label>
+    <input type="text" id="newTitle" placeholder="Enter product name" style="width:100%; margin-bottom:10px;"><br>
+    
+    <label>Price (₹):</label>
+    <input type="number" id="newPrice" placeholder="Enter price" style="width:100%; margin-bottom:10px;"><br>
+    
+    <label>Rating (★ up to 5):</label>
+    <input type="number" id="newRating" min="1" max="5" value="5" style="width:100%; margin-bottom:10px;"><br>
+
+    <button id="addProductBtn" class="btn">Add Product</button>
+    <button id="closeModal" class="btn" style="background:red; color:white; margin-left:10px;">Close</button>
+  </div>
+</div>
+
+
+   
 
     <script>
       const carouselInner = document.getElementById("carouselInner");
@@ -219,5 +268,191 @@
     // Auto slide every 5s
     setInterval(() => showSlide(index + 1), 5000);
     </script>
-  </body>
-</html> 
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const productsContainer = document.querySelector(".products");
+  if (!productsContainer) return;
+
+  let masterCards = Array.from(productsContainer.querySelectorAll(".product-card"));
+
+  const searchInput = document.querySelector(".search-input input");
+  const maxPriceInput = document.getElementById("maxPrice");
+  const sortSelect = document.getElementById("sortOptions");
+  const applyBtn = document.querySelector(".apply-btn");
+  const clearBtn = document.querySelector(".clear-btn");
+  const ascBtn = document.querySelector(".price-asc");
+  const descBtn = document.querySelector(".price-desc");
+
+  let sortOrder = null;
+
+  // Save sort order (don’t apply until Apply is clicked)
+  if (ascBtn) {
+    ascBtn.addEventListener("click", () => {
+      sortOrder = "asc";
+      ascBtn.classList.add("active");
+      if (descBtn) descBtn.classList.remove("active");
+    });
+  }
+  if (descBtn) {
+    descBtn.addEventListener("click", () => {
+      sortOrder = "desc";
+      descBtn.classList.add("active");
+      if (ascBtn) ascBtn.classList.remove("active");
+    });
+  }
+
+  function parsePriceString(str) {
+    if (!str) return NaN;
+    const cleaned = str.replace(/[^\d.]/g, "");
+    return cleaned ? parseFloat(cleaned) : NaN;
+  }
+
+  function getPrice(card) {
+    const priceText = card.querySelector(".price-tag")?.textContent || "";
+    return parsePriceString(priceText);
+  }
+
+  function renderCards(cards) {
+    productsContainer.innerHTML = "";
+    if (!cards.length) {
+      const p = document.createElement("p");
+      p.textContent = "No products match your filters.";
+      productsContainer.appendChild(p);
+      return;
+    }
+    cards.forEach(c => productsContainer.appendChild(c));
+  }
+
+  function filterAndSort() {
+    let filtered = masterCards.slice();
+
+    // Search
+    const q = (searchInput?.value || "").toLowerCase().trim();
+    if (q) {
+      filtered = filtered.filter(card => {
+        const title = card.querySelector(".product-title")?.textContent || "";
+        return title.toLowerCase().includes(q);
+      });
+    }
+
+    // ✅ Max Price (changed logic → show items ABOVE entered value)
+    const maxRaw = (maxPriceInput?.value || "").trim();
+    if (maxRaw) {
+      const minPrice = parsePriceString(maxRaw);
+      if (!isNaN(minPrice)) {
+        filtered = filtered.filter(card => getPrice(card) >= minPrice);
+      }
+    }
+
+    // Sorting
+    const s = sortSelect?.value || "";
+    if (s === "atoz") {
+      filtered.sort((a, b) => (a.querySelector(".product-title").textContent || "")
+        .localeCompare(b.querySelector(".product-title").textContent || ""));
+    } else if (s === "ztoa") {
+      filtered.sort((a, b) => (b.querySelector(".product-title").textContent || "")
+        .localeCompare(a.querySelector(".product-title").textContent || ""));
+    } else if (s === "lowtohigh" || sortOrder === "asc") {
+      filtered.sort((a, b) => getPrice(a) - getPrice(b));
+    } else if (s === "hightolow" || sortOrder === "desc") {
+      filtered.sort((a, b) => getPrice(b) - getPrice(a));
+    }
+
+    renderCards(filtered);
+  }
+
+  // Apply → run everything
+  if (applyBtn) {
+    applyBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      filterAndSort();
+    });
+  }
+
+  // Clear → reset everything
+  if (clearBtn) {
+    clearBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (searchInput) searchInput.value = "";
+      if (maxPriceInput) maxPriceInput.value = "";
+      if (sortSelect) sortSelect.value = "";
+      sortOrder = null;
+      if (ascBtn) ascBtn.classList.remove("active");
+      if (descBtn) descBtn.classList.remove("active");
+      renderCards(masterCards);
+    });
+  }
+
+  // Initial render
+  renderCards(masterCards);
+
+  // ------------------------------
+  // 🚀 New Item Modal Logic
+  // ------------------------------
+  const newItemBtn = document.getElementById("newItemBtn");
+  const newItemModal = document.getElementById("newItemModal");
+  const closeModal = document.getElementById("closeModal");
+  const addProductBtn = document.getElementById("addProductBtn");
+
+  if (newItemBtn && newItemModal && closeModal && addProductBtn) {
+    newItemBtn.addEventListener("click", () => {
+      newItemModal.style.display = "flex";
+    });
+
+    closeModal.addEventListener("click", () => {
+      newItemModal.style.display = "none";
+    });
+
+    addProductBtn.addEventListener("click", () => {
+      const img = document.getElementById("newImage").value.trim();
+      const title = document.getElementById("newTitle").value.trim();
+      const price = document.getElementById("newPrice").value.trim();
+      const rating = parseInt(document.getElementById("newRating").value, 10) || 5;
+
+      if (!img || !title || !price) {
+        alert("Please fill all fields!");
+        return;
+      }
+
+      const newCard = document.createElement("div");
+      newCard.className = "product-card";
+      newCard.innerHTML = `
+        <div class="product-img-section">
+          <img src="${img}" alt="${title}" class="product-img" />
+          <span class="price-tag">₹ ${price}</span>
+          <span class="stock-warning">In Stock</span>
+        </div>
+        <div class="product-details">
+          <h3 class="product-title">${title}</h3>
+          <div class="rating">
+            ${"★".repeat(Math.min(rating,5))}${"☆".repeat(5 - Math.min(rating,5))}
+            <span class="rating-count">(0)</span>
+          </div>
+          <button class="add-cart-btn">Add to Cart</button>
+        </div>
+      `;
+
+      // Add to master list so filters work
+      masterCards.push(newCard);
+      productsContainer.appendChild(newCard);
+      newItemModal.style.display = "none";
+
+      // reset form
+      document.getElementById("newImage").value = "";
+      document.getElementById("newTitle").value = "";
+      document.getElementById("newPrice").value = "";
+      document.getElementById("newRating").value = 5;
+    });
+  }
+});
+</script>
+
+
+    
+    
+
+
+</body>
+</html>
+
+    
