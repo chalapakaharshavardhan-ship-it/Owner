@@ -1,127 +1,189 @@
-body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f7fa;
-        margin: 0;
-        padding: 0;
+.para {
+          padding: 8px 10px;
+          margin: 0;
+          font-size: 14px;
+          color: #333;
       }
-      .container {
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
+
+      hr {
+          border: 0;
+          border-top: 1px solid #eee;
+          margin: 5px 0;
       }
+
       .hero {
-        text-align: center;
-        margin-bottom: 20px;
+          background-color:  white;
+          padding: 20px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+          text-align: center;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
       }
-      .hero h1 {
-        color: #9f7aea;
-        margin: 0;
-        font-size: 24px;
+
+      .page-title {
+          font-size: 28px;
+          font-weight: bold;
+          color: #6a5acd;
+          margin-bottom: 5px;
       }
-      .hero .subtitle {
-        color: #a0aec0;
-        margin: 5px 0;
+
+      .subtitle {
+          color: #666;
       }
+
       .search-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        background: #fff;
-        padding: 10px;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+          background-color: #e6ecf0;
+          padding: 15px;
+          border-radius: 8px;
+          margin-bottom: 20px;
       }
-      .search-container input {
-        width: 60%;
-        padding: 10px;
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-        font-size: 14px;
-        border: none;
+
+      .search-box {
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          font-size: 14px;
+          width: 100%;
+          max-width: 700px; /* Increased width for broader, user-friendly look */
+          background-color: white; /* White background for clean look */
       }
-      .search-container button {
-        padding: 10px 20px;
-        background-color: #9f7aea;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin-right: 10px;
+
+      .search-btn {
+          background: #6a5acd;
+          color: white;
+          border: none;
+          padding: 10px 18px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
       }
-      .search-container button:hover {
-        background-color: #8a4af3;
+
+      .search-btn:hover {
+          opacity: 0.9;
       }
+
       .total-customers {
-        background-color: #4fd1c5;
-        color: white;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
+          font-size: 14px;
+          color: #444;
       }
+
+      .table-container {
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+          overflow: hidden;
+          margin-bottom: 20px;
+      }
+
       table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #fff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        border-radius: 4px;
+          width: 100%;
+          border-collapse: collapse;
       }
+
+      thead {
+          background-color: #f4f6f8;
+          text-align: left;
+      }
+
       th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #edf2f7;
+          padding: 12px 15px;
+          font-size: 14px;
+          border-bottom: 1px solid #eee;
       }
+
       th {
-        background-color: #f7fafc;
-        color: #4a5568;
+          font-weight: bold;
       }
-      td {
-        color: #2d3748;
-      }
-      .customer-info {
-        display: flex;
-        align-items: center;
-      }
-      .customer-info .username {
-        margin-left: 8px;
-      }
+
       .view-orders {
-        background-color: #63b3ed;
-        color: white;
-        padding: 6px 12px;
-        border: none;
-        border-radius: 4px;
-        text-decoration: none;
-        font-size: 14px;
+          color: #6a5acd;
+          text-decoration: none;
       }
+
       .view-orders:hover {
-        background-color: #4299e1;
+          text-decoration: underline;
       }
+
       .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          margin-top: 20px;
       }
+
       .pagination button {
-        padding: 8px 12px;
-        background-color: #9f7aea;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        margin: 0 5px;
+          padding: 8px 12px;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          background-color: #fff;
+          cursor: pointer;
+          font-size: 14px;
       }
-      .pagination button:hover {
-        background-color: #8a4af3;
+
+      .pagination button.active {
+          background-color: #6a5acd;
+          color: white;
+          border-color: #6a5acd;
       }
-    .active {
-        background: #6c63ff;
-        color: white;
+
+      .pagination button:disabled {
+          cursor: not-allowed;
+          opacity: 0.6;
       }
-      /* ✅ Fix "View Orders" wrapping on mobile */
+
+      .empty-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: #555;
+          padding: 20px;
+      }
+
+      .empty-state .icon {
+          font-size: 32px;
+          margin-bottom: 10px;
+      }
+
+      .empty-title {
+          font-size: 16px;
+          font-weight: bold;
+          margin-bottom: 5px;
+      }
+
+      .empty-text {
+          font-size: 14px;
+          color: #888;
+      }
+
+      .footer {
+          text-align: center;
+          padding: 10px 0;
+          color: #666;
+      }
+      /* ✅ Keep "View Orders" always visible on mobile */
 .view-orders {
-  white-space: nowrap;
+  white-space: nowrap;         /* stop wrapping */
+  display: inline-flex;        /* keep icon + text aligned */
+  align-items: center;
+  gap: 6px;                    /* space between icon and text */
+  font-size: 13px;             /* slightly smaller for mobile */
 }
 
+/* ✅ Make table scroll horizontally on small screens */
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 600px; /* stop columns from squishing */
+  }
+}

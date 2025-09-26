@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders for rkk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="view-orders.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav-profile.css">
+</head>
+<body>
+    <header class="navbar">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="white" class="bi bi-check2-square" viewBox="0 0 16 16">
+              <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+              <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
+            </svg>
+          </div>
+          <span class="brand-name">TaskPro</span>
+        </div>
+        <div class="nav-actions">
+          <a href="dashboard.html" class="dashboard-pill">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" class="bi bi-house" viewBox="0 0 16 16">
+              <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+            </svg>
+            <span class="dashboard-text">Dashboard</span>
+          </a>
+          <div class="profile" id="profile">
+            <div id="profileIcon" class="profile-trigger">
+              <img
+                src="download.jpeg"
+                alt="Profile"
+                style="width: 34px; height: 34px; border-radius: 50%"
+              />
+            </div>
+            <div id="profileDropdown" class="profile-dropdown">
+              <ul>
+                <p class="para">Owner</p>
+                <p class="para">Owner@gmail.com</p>
+                <hr>
+                <li><a href="#" id="settingsLink">Settings</a></li>
+                <hr>
+                <li><a href="#" id="logoutLink">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+        <!-- Header Container -->
+        <div class="header-container">
+            <div class="top-bar">
+                <div>
+                    <h1 class="page-title">Orders for rkk</h1>
+                    <p class="subtitle">View and manage orders for this customer</p>
+                </div>
+                <a href="customers.html" class="back-btn">← Back to Customers</a>
+            </div>
+        </div>
+
+        <!-- Search & Filter -->
+        <div class="search-filter-container">
+            <div style="width: 50%; display: flex; align-items: center; gap: 10px;">
+                <input type="text" id="searchInput" placeholder="Search orders..." class="search-box">
+                <button class="search-btn" onclick="filterOrders()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="10.5" cy="10.5" r="7.5" stroke="white" stroke-width="2"/>
+                        <line x1="15.5" y1="15.5" x2="21.5" y2="21.5" stroke="white" stroke-width="2"/>
+                    </svg>
+                    Search
+                </button>
+            </div>
+            <div style="width: 50%; display: flex; align-items: center; gap: 10px;">
+                <label for="status" class="filter-label">Filter by status:</label>
+                <select id="statusFilter" class="filter-dropdown" onchange="filterOrders()">
+                    <option value="All">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Processing">Processing</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="table-container">
+            <table id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersBody"></tbody>
+            </table>
+            <!-- No Orders Found Message -->
+            <div id="noOrders" class="empty-state">
+                <div class="icon">🧾</div>
+                <p class="empty-title">No orders found</p>
+                <p class="empty-text">This customer hasn't placed any orders yet.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function filterOrders() {
+            const searchValue = document.getElementById("searchInput").value.toLowerCase();
+            const statusFilter = document.getElementById("statusFilter").value;
+            const table = document.getElementById("ordersTable");
+            const tbody = document.getElementById("ordersBody");
+            const rows = tbody.getElementsByTagName("tr");
+            let visibleCount = 0;
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                const orderId = cells[0].textContent.toLowerCase();
+                const items = cells[2].textContent.toLowerCase();
+                const status = cells[4].textContent;
+
+                const matchesSearch = orderId.includes(searchValue) || items.includes(searchValue) || status.toLowerCase().includes(searchValue);
+                const matchesStatus = (statusFilter === "All" || status === statusFilter);
+
+                if (matchesSearch && matchesStatus) {
+                    rows[i].style.display = "";
+                    visibleCount++;
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+
+            // Toggle "No Orders Found" message
+            document.getElementById("noOrders").style.display = (visibleCount === 0) ? "flex" : "none";
+        }
+    </script>
+</body>
+</html>

@@ -4,12 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>TaskPro - Customers</title>
-    <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="nav-profile.css" />
-    <link rel="stylesheet" href="customers.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="customers.css">
+    <link rel="stylesheet" href="view orders.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav-profile.css">
   </head>
   <body>
     <!-- NAVBAR -->
@@ -53,39 +52,42 @@
         </div>
       </div>
     </header>
-
     <!-- MAIN CONTENT -->
     <main class="container">
       <section class="hero">
-        <h1>Customer Management</h1>
+        <center>
+        <h1 class="page-title">Customer Management</h1>
         <p class="subtitle">View and manage all customer accounts</p>
+        </center>
       </section>
 
       <section class="search-container">
-        <input type="text" placeholder="Search customers..." />
-        <button>Search</button>
-        <div class="total-customers">Total Customers: 1</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <input type="text" id="searchInput" class="search-box" placeholder="Search customers..." oninput="searchCustomers()" />
+          <button class="search-btn">Search</button>
+        </div>
+        <div class="total-customers" id="totalCustomers">Total Customers: 0</div>
       </section>
 
-      <table id="customersTable">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Name</th>
-            <th>Joined</th>
-            <th>Orders</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+      <div class="table-container">
+        <table id="customersTable">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Joined</th>
+              <th>Orders</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
 
-      <!-- ✅ Pagination -->
       <div class="pagination">
         <button id="prevBtn">Previous</button>
-        <button class="page-btn" data-page="1">1</button>
-        <button class="page-btn" data-page="2">2</button>
+        <span id="pageNumbers"></span>
         <button id="nextBtn">Next</button>
       </div>
     </main>
@@ -100,46 +102,88 @@
       const tableBody = document.getElementById("tableBody");
       const prevBtn = document.getElementById("prevBtn");
       const nextBtn = document.getElementById("nextBtn");
+      const pageNumbers = document.getElementById("pageNumbers");
+      let currentPage = 1;
 
-      // ✅ Function to update table
+      const customers = [
+        { username: 'kalyan', email: 'babukalyan523@gmail.com', name: 'Not provided', joined: 'Aug 30, 2025', orders: 0 },
+        { username: 'customerr', email: 'customer1230@gmail.com', name: 'cust tomer', joined: 'Sep 06, 2025', orders: 0 },
+        { username: 'customer.', email: 'customer123@gmail.com', name: 'cus tomer', joined: 'Sep 06, 2025', orders: 0 },
+        { username: 'customer', email: 'customer@gmail.com', name: 'customer c', joined: 'Sep 06, 2025', orders: 0 },
+        { username: 'Ravirekula', email: 'Not provided', name: 'Not provided', joined: 'Sep 06, 2025', orders: 0 },
+        { username: 'rkk', email: 'Not provided', name: 'Not provided', joined: 'Sep 02, 2025', orders: 0 }
+      ];
+
+      let filteredCustomers = [...customers];
+
       function updateTable(page) {
-        if (page === 2) {
-          tableBody.innerHTML = ""; // Empty on page 2
-        } else {
-          tableBody.innerHTML = `
-            <tr>
-              <td class="customer-info"><span class="username">kalyan</span></td>
-              <td>babukalyan523@gmail.com</td>
-              <td>Not provided</td>
-              <td>Aug 30, 2025</td>
-              <td>0</td>
-              <td><a href="#" class="view-orders">View Orders</a></td>
-            </tr>
+        tableBody.innerHTML = "";
+        let customersToShow = page === 1 ? filteredCustomers : [];
+
+        if (customersToShow.length === 0) {
+          const row = document.createElement("tr");
+          row.className = "no-orders";
+          row.innerHTML = `
+            <td colspan="6">
+              <div class="empty-state">
+                <i class="fas fa-users icon"></i>
+                <div class="empty-title">No Customers Found</div>
+                <div class="empty-text">Try adjusting your search or filters</div>
+              </div>
+            </td>
           `;
+          tableBody.appendChild(row);
+        } else {
+          customersToShow.forEach(customer => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td class="customer-info"><span class="username">${customer.username}</span></td>
+              <td>${customer.email}</td>
+              <td>${customer.name}</td>
+              <td>${customer.joined}</td>
+              <td>${customer.orders}</td>
+              <td><a href="view-orders.html" class="view-orders"><i class="fa fa-eye"></i> View Orders</a></td>
+            `;
+            tableBody.appendChild(row);
+          });
         }
 
-        // Highlight active page
-        document.querySelectorAll(".page-btn").forEach(btn => {
-          btn.classList.remove("active");
-          if (parseInt(btn.dataset.page) === page) {
-            btn.classList.add("active");
-          }
-        });
+        document.getElementById("totalCustomers").textContent =
+          "Total Customers: " + filteredCustomers.length;
+
+        updatePagination();
       }
 
-      // ✅ Initial load
-      let currentPage = 1;
-      updateTable(currentPage);
+      function updatePagination() {
+        pageNumbers.innerHTML = "";
+        for (let i = 1; i <= 2; i++) {
+          const btn = document.createElement("button");
+          btn.className = "page-btn" + (i === currentPage ? " active" : "");
+          btn.textContent = i;
+          btn.addEventListener("click", () => {
+            currentPage = i;
+            updateTable(currentPage);
+          });
+          pageNumbers.appendChild(btn);
+        }
 
-      // ✅ Page buttons
-      document.querySelectorAll(".page-btn").forEach(btn => {
-        btn.addEventListener("click", () => {
-          currentPage = parseInt(btn.dataset.page);
-          updateTable(currentPage);
+        prevBtn.disabled = currentPage === 1;
+        nextBtn.disabled = currentPage === 2;
+      }
+
+      function searchCustomers() {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        filteredCustomers = customers.filter(customer => {
+          return (
+            (customer.username && customer.username.toLowerCase().includes(searchTerm)) ||
+            (customer.email && customer.email.toLowerCase().includes(searchTerm)) ||
+            (customer.name && customer.name.toLowerCase().includes(searchTerm))
+          );
         });
-      });
+        currentPage = 1;
+        updateTable(currentPage);
+      }
 
-      // ✅ Prev button
       prevBtn.addEventListener("click", () => {
         if (currentPage > 1) {
           currentPage--;
@@ -147,13 +191,16 @@
         }
       });
 
-      // ✅ Next button
       nextBtn.addEventListener("click", () => {
         if (currentPage < 2) {
           currentPage++;
           updateTable(currentPage);
         }
       });
+
+      window.onload = () => {
+        updateTable(currentPage);
+      };
     </script>
   </body>
 </html>

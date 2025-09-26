@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TaskPro - Order Details</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+      <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="nav-profile.css">
+    <link rel="stylesheet" href="order-details.css">
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="logo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              fill="white"
+              class="bi bi-check2-square"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"
+              />
+              <path
+                d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"
+              />
+            </svg>
+          </div>
+          <span class="brand-name">TaskPro</span>
+        </div>
+        <div class="nav-actions">
+          <a href="dashboard.html" class="dashboard-pill">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="white"
+              class="bi bi-house"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"
+              />
+            </svg>
+            <span class="dashboard-text">Dashboard</span>
+          </a>
+          <div class="profile" id="profile">
+            <div id="profileIcon" class="profile-trigger">
+              <img
+                src="download.jpeg"
+                alt="Profile"
+                style="width: 34px; height: 34px; border-radius: 50%"
+              />
+            </div>
+            <div id="profileDropdown" class="profile-dropdown">
+              <ul>
+                <p class="para">Owner</p>
+                <p class="para">Owner@gmail.com</p>
+                <hr>
+                <!-- <li><a href="#" id="editProfileLink">Edit</a></li> -->
+                <li><a href="#" id="settingsLink">Settings</a></li>
+                <hr>
+                <li><a href="#" id="logoutLink">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Order #order_RD52V8jdXcYHGD</h1>
+        <a href="orders.html" class="back-link">← Back to Orders</a>
+      </section>
+      <p class="subtitle">Order details and status management</p>
+
+      <div class="order-table-wrapper">
+        <div class="order-table order-items">
+          <div class="order-section">
+            <h2>Order Items</h2>
+            <table class="items-table">
+              <tr>
+                <td>Kurta Set<br>Quantity: 1<br>₹899.0 each</td><td>1</td><td>₹899.0</td>
+              </tr>
+              <tr>
+                <td>Handbag<br>Quantity: 1<br>₹1000.0 each</td><td>1</td><td>₹1000.0</td>
+              </tr>
+              <tr>
+                <td>Shirt<br>Quantity: 1<br>₹700.0 each</td><td>1</td><td>₹700.0</td>
+              </tr>
+              <tr>
+                <td>Subtotal:</td><td></td><td>₹2599.0</td>
+              </tr>
+              <tr class="discount">
+                <td>Discount:</td><td></td><td>-₹655.0</td>
+              </tr>
+              <tr>
+                <td>Shipping:</td><td></td><td>FREE</td>
+              </tr>
+              <tr class="total">
+                <td class="total1">Total:</td><td></td><td><strong>₹1944.0</strong></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="order-table order-status">
+          <div class="order-section">
+            <h2>Order Status</h2>
+            <table class="order-status-table">
+              <tr>
+                <td colspan="2">Status Tracker</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="status-tracker">
+                    <div class="status-step completed">
+                      <div class="step-circle">✓</div>
+                      <span>Pending</span>
+                    </div>
+                    <div class="status-step completed">
+                      <div class="step-circle">✓</div>
+                      <span>Processing</span>
+                    </div>
+                    <div class="status-step completed">
+                      <div class="step-circle">✓</div>
+                      <span>Shipped</span>
+                    </div>
+                    <div class="status-step completed">
+                      <div class="step-circle">✓</div>
+                      <span>Delivered</span>
+                    </div>
+                    <div class="status-step active">
+                      <div class="step-circle">✓</div>
+                      <span>Cancelled</span>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">Update Status</td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="status-update">
+                    <select id="statusSelect">
+                      <option value="Pending">Pending</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Shipped">Shipped</option>
+                      <option value="Delivered">Delivered</option>
+                      <option value="Cancelled" selected>Cancelled</option>
+                    </select>
+                    <button class="btn-update"><i class="bi bi-check-circle"></i> Update Status</button>
+                  </div>
+                </td>
+              </tr>
+            </table>
+            <div class="customer-info">
+              <h2>Customer Information</h2>
+              <div class="info-item">
+                <span>Username:</span><span>kalyanR</span>
+              </div>
+              <div class="info-item">
+                <span>Email:</span><span>babukalyan523@gmail.com</span>
+              </div>
+              <div class="info-item">
+                <span>Order Count: </span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="order-table shipping-details">
+        <h2>Shipping Details</h2>
+        <div class="info-item2">
+          <span><strong>Kalyan R</strong></span>
+        </div>
+        <div class="info-item2">
+          <span>Hyderabad, Telangana, 500081</span>
+        </div>
+        <div class="info-item2">
+          <span><i class="fas fa-phone"></i> +91-9876543210</span>
+        </div>
+        <div class="info-item2">
+          <span><strong>Order Date:</strong></span><span>September 23, 2025 ,9:33 a.m.</span>
+        </div>
+        <div class="info-item2">
+          <span><strong>Last Updated:</strong></span><span>September 23, 2025 ,9:33 a.m.</span>
+        </div>
+      </div>
+
+      <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get("order_id");
+        if (orderId) {
+          document.querySelector("h1").textContent = `Order #${orderId}`;
+        }
+
+        function updateStatus() {
+          const status = document.getElementById("statusSelect").value;
+          alert(`Order status updated to ${status}`);
+        }
+
+        document
+          .querySelector(".btn-update")
+          .addEventListener("click", updateStatus);
+      </script>
+    </main>
+  </body>
+</html>
