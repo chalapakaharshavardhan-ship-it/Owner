@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orders for rkk</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <link rel="stylesheet" href="view-orders.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="nav-profile.css">
+    <link rel="stylesheet" href="view-orders.css">
 </head>
 <body>
     <header class="navbar">
@@ -53,38 +53,42 @@
 
     <div class="container">
         <!-- Header Container -->
-        <div class="header-container">
-            <div class="top-bar">
-                <div>
-                    <h1 class="page-title">Orders for rkk</h1>
-                    <p class="subtitle">View and manage orders for this customer</p>
+        <div class="header-card">
+            <div class="header-container">
+                <div class="top-bar">
+                    <div>
+                        <h1 class="page-title">Orders for rkk</h1>
+                        <p class="subtitle">View and manage orders for this customer</p>
+                    </div>
+                    <a href="customers.html" class="back-btn">← Back to Customers</a>
                 </div>
-                <a href="customers.html" class="back-btn">← Back to Customers</a>
             </div>
         </div>
 
         <!-- Search & Filter -->
-        <div class="search-filter-container">
-            <div style="width: 50%; display: flex; align-items: center; gap: 10px;">
-                <input type="text" id="searchInput" placeholder="Search orders..." class="search-box">
-                <button class="search-btn" onclick="filterOrders()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="10.5" cy="10.5" r="7.5" stroke="white" stroke-width="2"/>
-                        <line x1="15.5" y1="15.5" x2="21.5" y2="21.5" stroke="white" stroke-width="2"/>
-                    </svg>
-                    Search
-                </button>
-            </div>
-            <div style="width: 50%; display: flex; align-items: center; gap: 10px;">
-                <label for="status" class="filter-label">Filter by status:</label>
-                <select id="statusFilter" class="filter-dropdown" onchange="filterOrders()">
-                    <option value="All">All Statuses</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Processing">Processing</option>
-                    <option value="Shipped">Shipped</option>
-                    <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
+        <div class="search-filter-card">
+            <div class="search-filter-container">
+                <div style="width: 50%; display: flex; align-items: center; gap: 10px;">
+                    <input type="text" id="searchInput" placeholder="Search orders..." class="search-box">
+                    <button class="search-btn" onclick="filterOrders()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="10.5" cy="10.5" r="7.5" stroke="white" stroke-width="2"/>
+                            <line x1="15.5" y1="15.5" x2="21.5" y2="21.5" stroke="white" stroke-width="2"/>
+                        </svg>
+                        Search
+                    </button>
+                </div>
+                <div style="width: 50%; display: flex; align-items: center; gap: 10px;">
+                    <label for="status" class="filter-label">Filter by status:</label>
+                    <select id="statusFilter" class="filter-dropdown" onchange="filterOrders()">
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Processing">Processing</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -101,14 +105,43 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <tbody id="ordersBody"></tbody>
+                <tbody id="ordersBody">
+                    <tr id="noOrdersRow" style="display: none;">
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm0 2v16h12V4H6zm2 2h8v2H8V6zm0 4h8v2H8v-2zm0 4h5v2H8v-2z" fill="#666"/>
+                                </svg>
+                                No orders found
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ORD54321</td>
+                        <td>2025-09-10</td>
+                        <td>Women Dresses, Scarf</td>
+                        <td>$149.99</td>
+                        <td>Pending</td>
+                        <td><a href="#">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>ORD54322</td>
+                        <td>2025-09-18</td>
+                        <td>Men Shirts, Belt</td>
+                        <td>$79.50</td>
+                        <td>Shipped</td>
+                        <td><a href="#">View</a></td>
+                    </tr>
+                    <tr>
+                        <td>ORD54323</td>
+                        <td>2025-09-27</td>
+                        <td>Kids Wear, Socks</td>
+                        <td>$45.25</td>
+                        <td>Cancelled</td>
+                        <td><a href="#">View</a></td>
+                    </tr>
+                </tbody>
             </table>
-            <!-- No Orders Found Message -->
-            <div id="noOrders" class="empty-state">
-                <div class="icon">🧾</div>
-                <p class="empty-title">No orders found</p>
-                <p class="empty-text">This customer hasn't placed any orders yet.</p>
-            </div>
         </div>
     </div>
 
@@ -120,16 +153,24 @@
             const table = document.getElementById("ordersTable");
             const tbody = document.getElementById("ordersBody");
             const rows = tbody.getElementsByTagName("tr");
+            const noOrdersRow = document.getElementById("noOrdersRow");
             let visibleCount = 0;
 
             for (let i = 0; i < rows.length; i++) {
+                if (rows[i].id === "noOrdersRow") {
+                    continue; // Skip the no orders row
+                }
                 const cells = rows[i].getElementsByTagName("td");
                 const orderId = cells[0].textContent.toLowerCase();
                 const items = cells[2].textContent.toLowerCase();
                 const status = cells[4].textContent;
 
-                const matchesSearch = orderId.includes(searchValue) || items.includes(searchValue) || status.toLowerCase().includes(searchValue);
-                const matchesStatus = (statusFilter === "All" || status === statusFilter);
+                // Check if searchValue matches status exactly (case-insensitive) or other fields
+                const matchesSearch = searchValue === '' || 
+                                     orderId.includes(searchValue) || 
+                                     items.includes(searchValue) || 
+                                     status.toLowerCase() === searchValue;
+                const matchesStatus = statusFilter === "All" || status === statusFilter;
 
                 if (matchesSearch && matchesStatus) {
                     rows[i].style.display = "";
@@ -139,8 +180,8 @@
                 }
             }
 
-            // Toggle "No Orders Found" message
-            document.getElementById("noOrders").style.display = (visibleCount === 0) ? "flex" : "none";
+            // Toggle "No Orders Found" row
+            noOrdersRow.style.display = (visibleCount === 0) ? "" : "none";
         }
     </script>
 </body>

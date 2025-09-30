@@ -769,3 +769,17 @@ body {
     font-size: 0.8rem !important;
   }
 }
+/* Keep Apply + Add New side by side */
+.actions {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;   /* allows them to wrap only if space is too small */
+  gap: 10px !important;
+  justify-content: flex-start !important;
+}
+
+.btn.apply,
+.btn.add-new-btn {
+  width: auto !important;  /* prevent full-width on mobile */
+  flex: 0 0 auto !important;
+}
