@@ -874,6 +874,10 @@
         importModal.style.display = "none";
         csvFileInput.value = "";
       });
+      document.querySelector("#importModal .modal-actions .btn-cancel").addEventListener("click", () => {
+        importModal.style.display = "none";
+        csvFileInput.value = "";
+      });
 
       importBtn.addEventListener("click", () => {
         if (!isLocalStorageAvailable()) {
