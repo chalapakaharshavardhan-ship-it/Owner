@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="nav-profile.css"/>
   </head>
   <body>
-    <header class="navbar">
+    <!-- <header class="navbar">
       <div class="nav-inner">
         <div class="brand">
           <div class="logo">
@@ -68,8 +68,65 @@
           </div>
         </div>
       </div>
-    </header> 
-
+    </header>  -->
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="logo">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              fill="white"
+              class="bi bi-check2-square"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"
+              />
+              <path
+                d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"
+              />
+            </svg>
+          </div>
+          <span class="brand-name">TaskPro</span>
+        </div>
+        <div class="nav-actions">
+          <a href="dashboard.html" class="dashboard-pill">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              fill="white"
+              class="bi bi-house"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"
+              />
+            </svg>
+            <span class="dashboard-text">Dashboard</span>
+          </a>
+          <div class="profile" id="profile">
+            <div id="profileIcon" class="profile-trigger">
+              <img
+                src="download.jpeg"
+                alt="Profile"
+                style="width: 34px; height: 34px; border-radius: 50%"
+              />
+            </div>
+            <div id="profileDropdown" class="profile-dropdown">
+              <ul>
+                 <li><a href="#" id="editProfileLink">Edit</a></li> 
+                <li><a href="#" id="settingsLink">Settings</a></li>
+                <li><a href="#" id="logoutLink">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
 <main class="container">
       <section class="carousel">
         <div class="carousel-inner" id="carouselInner"> 
@@ -444,12 +501,143 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+// Add this script after your existing scripts
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Profile functionality
+  const savedUsername = localStorage.getItem("username") || "owner";
+  const savedEmail = localStorage.getItem("email") || "owner@signaltone.com";
+  const savedProfileImg = localStorage.getItem("profileImg") || "download.jpeg";
+
+  const profileIcon = document.getElementById("profileIcon");
+  const profileImg = document.getElementById("profileImg");
+  const profileTrigger = document.querySelector(".profile-trigger");
+  const profilePopup = document.getElementById("profilePopup");
+  const profileForm = document.getElementById("profileForm");
+  const usernameInput = document.getElementById("username");
+  const emailInput = document.getElementById("email");
+  const photoInput = document.getElementById("photoInput");
+  const changePhotoBtn = document.getElementById("changePhoto");
+  const closeProfilePopupBtn = document.getElementById("closeProfilePopupBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const editProfileLink = document.getElementById("editProfileLink");
+  const settingsLink = document.getElementById("settingsLink");
+  const logoutLink = document.getElementById("logoutLink");
+
+  profileImg.src = savedProfileImg;
+  profileIcon.innerHTML = `<img src="${savedProfileImg}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+
+  profileTrigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = profileDropdown.style.display === "block" ? "none" : "block";
+  });
+
+  editProfileLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = "none";
+    profilePopup.style.display = "flex";
+  });
+
+  settingsLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = "none";
+    profilePopup.style.display = "flex";
+  });
+
+  logoutLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = "none";
+    if (confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("username");
+      localStorage.removeItem("email");
+      localStorage.removeItem("profileImg");
+      window.location.href = "index.html";
+    }
+  });
+
+  changePhotoBtn.addEventListener("click", () => {
+    photoInput.click();
+  });
+
+  photoInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        profileImg.src = event.target.result;
+        profileIcon.innerHTML = `<img src="${event.target.result}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  profileForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = usernameInput.value;
+    const email = emailInput.value;
+    const profileImgSrc = profileImg.src;
+    localStorage.setItem("username", username);
+    localStorage.setItem("email", email);
+    localStorage.setItem("profileImg", profileImgSrc);
+    profileIcon.innerHTML = `<img src="${profileImgSrc}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+    profilePopup.style.display = "none";
+  });
+
+  document.querySelector("#profilePopup .cancel-btn").addEventListener("click", () => {
+    profilePopup.style.display = "none";
+    usernameInput.value = localStorage.getItem("username") || "owner";
+    emailInput.value = localStorage.getItem("email") || "owner@signaltone.com";
+    profileImg.src = localStorage.getItem("profileImg") || "download.jpeg";
+    profileIcon.innerHTML = `<img src="${profileImg.src}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+  });
+
+  closeProfilePopupBtn.addEventListener("click", () => {
+    profilePopup.style.display = "none";
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (
+      !profileTrigger.contains(e.target) &&
+      !profileDropdown.contains(e.target)
+    ) {
+      profileDropdown.style.display = "none";
+    }
+  });
+});
+
 </script>
 
 
     
     
-
+<div class="profile-popup" id="profilePopup" style="display:none;">
+  <div class="popup-inner">
+    <div class="popup-header">
+      <h2>Edit Profile</h2>
+      <button class="close-btn" id="closeProfilePopupBtn">&times;</button>
+    </div>
+    <div class="image-container">
+      <img id="profileImg" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%;" />
+      <input type="file" id="photoInput" accept="image/*" style="display: none;" />
+      <button id="changePhoto" class="image-btn">Change Photo</button>
+    </div>
+    <form id="profileForm" class="ecommerce-form">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="username" value="owner" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" value="owner@signaltone.com" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="save-btn">Save Changes</button>
+        <button type="button" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>

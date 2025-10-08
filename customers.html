@@ -43,6 +43,7 @@
                 <p class="para">Owner</p>
                 <p class="para">Owner@gmail.com</p>
                 <hr>
+                <li><a href="#" id="editprofileLink">Edit</a></li>
                 <li><a href="#" id="settingsLink">Settings</a></li>
                 <hr>
                 <li><a href="#" id="logoutLink">Logout</a></li>
@@ -201,6 +202,147 @@
       window.onload = () => {
         updateTable(currentPage);
       };
+
+     document.addEventListener("DOMContentLoaded", () => {
+  // Profile functionality
+  const savedUsername = localStorage.getItem("username") || "owner";
+  const savedEmail = localStorage.getItem("email") || "owner@signaltone.com";
+  const savedProfileImg = localStorage.getItem("profileImg") || "download.jpeg";
+
+  const profileIcon = document.getElementById("profileIcon");
+  const profileImg = document.getElementById("profileImg");
+  const profileTrigger = document.querySelector(".profile-trigger");
+  const profilePopup = document.getElementById("profilePopup");
+  const profileForm = document.getElementById("profileForm");
+  const usernameInput = document.getElementById("username");
+  const emailInput = document.getElementById("email");
+  const photoInput = document.getElementById("photoInput");
+  const changePhotoBtn = document.getElementById("changePhoto");
+  const closeProfilePopupBtn = document.getElementById("closeProfilePopupBtn");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const editProfileLink = document.getElementById("editProfileLink");
+  const settingsLink = document.getElementById("settingsLink");
+  const logoutLink = document.getElementById("logoutLink");
+  const profileName = document.getElementById("profileName");
+  const profileEmail = document.getElementById("profileEmail");
+
+  profileImg.src = savedProfileImg;
+  profileIcon.innerHTML = `<img src="${savedProfileImg}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+  profileName.textContent = savedUsername;
+  profileEmail.textContent = savedEmail;
+
+  profileTrigger.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = profileDropdown.style.display === "block" ? "none" : "block";
+  });
+
+  editProfileLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = "none";
+    profilePopup.style.display = "flex";
+  });
+
+  settingsLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = "none";
+    profilePopup.style.display = "flex";
+  });
+
+  logoutLink.addEventListener("click", (e) => {
+    e.preventDefault();
+    profileDropdown.style.display = "none";
+    if (confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("username");
+      localStorage.removeItem("email");
+      localStorage.removeItem("profileImg");
+      window.location.href = "index.html";
+    }
+  });
+
+  changePhotoBtn.addEventListener("click", () => {
+    photoInput.click();
+  });
+
+  photoInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        profileImg.src = event.target.result;
+        profileIcon.innerHTML = `<img src="${event.target.result}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  profileForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const username = usernameInput.value;
+    const email = emailInput.value;
+    const profileImgSrc = profileImg.src;
+    localStorage.setItem("username", username);
+    localStorage.setItem("email", email);
+    localStorage.setItem("profileImg", profileImgSrc);
+    profileIcon.innerHTML = `<img src="${profileImgSrc}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+    profileName.textContent = username;
+    profileEmail.textContent = email;
+    profilePopup.style.display = "none";
+  });
+
+  document.querySelector("#profilePopup .cancel-btn").addEventListener("click", () => {
+    profilePopup.style.display = "none";
+    usernameInput.value = localStorage.getItem("username") || "owner";
+    emailInput.value = localStorage.getItem("email") || "owner@signaltone.com";
+    profileImg.src = localStorage.getItem("profileImg") || "download.jpeg";
+    profileIcon.innerHTML = `<img src="${profileImg.src}" alt="Profile" style="width: 34px; height: 34px; border-radius: 50%;">`;
+    profileName.textContent = usernameInput.value;
+    profileEmail.textContent = emailInput.value;
+  });
+
+  closeProfilePopupBtn.addEventListener("click", () => {
+    profilePopup.style.display = "none";
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (
+      !profileTrigger.contains(e.target) &&
+      !profileDropdown.contains(e.target)
+    ) {
+      profileDropdown.style.display = "none";
+    }
+  });
+});
+
+
     </script>
+
+    <div class="profile-popup" id="profilePopup" style="display:none;">
+  <div class="popup-inner">
+    <div class="popup-header">
+      <h2>Edit Profile</h2>
+      <button class="close-btn" id="closeProfilePopupBtn">&times;</button>
+    </div>
+    <div class="image-container">
+      <img id="profileImg" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%;" />
+      <input type="file" id="photoInput" accept="image/*" style="display: none;" />
+      <button id="changePhoto" class="image-btn">Change Photo</button>
+    </div>
+    <form id="profileForm" class="ecommerce-form">
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="username" value="owner" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="email" value="owner@signaltone.com" />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="save-btn">Save Changes</button>
+        <button type="button" class="cancel-btn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
   </body>
 </html>

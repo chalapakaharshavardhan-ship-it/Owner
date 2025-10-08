@@ -12,7 +12,12 @@
   display: flex;
   transition: transform 0.5s ease-in-out;
 }
-
+.para {
+          padding: 8px 10px;
+          margin: 0;
+          font-size: 14px;
+          color: #333;
+      }
 .carousel-item {
   min-width: 100%;
   box-sizing: border-box;
